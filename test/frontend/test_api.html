@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="display"></div>
+    translate<input id="myText">
+    <button onclick="tr()">Translate</button>
+    <script>
+        const tr = () => {
+            const data = JSON.stringify({
+                texts: [
+                    myText.value,
+                ],
+                tl: 'ru',
+                sl: 'en'
+            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState === this.DONE) {
+                    res= JSON.parse(this.responseText)
+                    display.innerHTML = res.data
+                }
+            });
+
+            xhr.open('POST', 'https://ai-translate.p.rapidapi.com/translateHtml');
+            xhr.setRequestHeader('x-rapidapi-key', '9010927403msh1000be5f814482fp19f61ajsn0b7f36144b09');
+            xhr.setRequestHeader('x-rapidapi-host', 'ai-translate.p.rapidapi.com');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.send(data);
+        }
+    </script>
+
+
+</body>
+
+</html>
